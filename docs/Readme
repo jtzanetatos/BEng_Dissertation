@@ -1,1 +1,3 @@
+This folder contains my Bachelor's paper along with an Excel file containing the manually measured annotations.
 
+For this project the annotations are defined as the number of people present in every video sequence of the PETS09 dataset.
