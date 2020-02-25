@@ -1,5 +1,5 @@
 function [ fg, bg_bw ] = imBackSub( fr_bw , bg_bw , threshold )
-%% Function to subtract background from foreground 
+%% Function to subtract background from foreground
 %   -------------------------------------------------------------------- %
 %   Function that subtracts the background from the foreground
 %   The function calculates the absolute difference between the foreground
