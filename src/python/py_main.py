@@ -25,7 +25,24 @@ def get_path(wildcard):
     return path
 
 def imBackSup(fr_bw, bg_bw, threshold):
+    '''
     
+
+    Parameters
+    ----------
+    fr_bw : TYPE
+        DESCRIPTION.
+    bg_bw : TYPE
+        DESCRIPTION.
+    threshold : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    TYPE
+        DESCRIPTION.
+
+    '''
     
     # Evaluate in/out frames dimensions
     height, width = bg_bw.shape()
@@ -54,7 +71,22 @@ def imBackSup(fr_bw, bg_bw, threshold):
     return (np.array((fr_bw, bg_bw)))
 
 def contour(fg, ns1):
+    '''
     
+
+    Parameters
+    ----------
+    fg : TYPE
+        DESCRIPTION.
+    ns1 : TYPE
+        DESCRIPTION.
+
+    Returns
+    -------
+    fgc : TYPE
+        DESCRIPTION.
+
+    '''
     
     # Apply median filtering on foregound frame
     fg = cv.medianBlur(fg, ksize=7)
@@ -85,7 +117,36 @@ def main():
     
     
     # Select video file; at the time, .avi & .mp4 files supported.
+    #TODO: implement appropriate wildcard argument
     vid_file = get_path('*.avi', '*.mp4')
+    
+    # Create video reader object
+    vidObj = cv.VideoCapture(vid_file)
+    
+    # Read first frame as background
+    ret, bg = vidObj.read()
+    
+    # Convert background to greyscale
+    bg_bw = cv.cvtColor(bg, cv.COLOR_BGR2GRAY)
+    
+    # Background pixel value threshold
+    thresh = 25
+    
+    while ret:
+        # Read current frame
+        ret, fr = vidObj.read()
+        
+        # Convert current frame to greyscale
+        fr_bw = cv.cvtColor(fr_bw, cv.COLOR_BGR2GRAY)
+        
+        # Background subtraction
+        fg, bg_bw = imBackSup(fr_bw, bg_bw, threshold=thresh)
+        
+        # Contour extraction
+        fgc = contour(fg, ns1)
+        
+        # Object labeling
+        imlabel(fgc, conncomp, minsizeofCC)
 
 if __name__ == '__main__':
     main()
