@@ -1,0 +1,20 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+/home/iason/Projects/GitHub/personal_inv/BEng_Dissertation/src/C++/main.cpp
+iostream
+-
+opencv4/opencv2/opencv.hpp
+-
+opencv4/opencv2/imgproc.hpp
+-
+opencv4/opencv2/core.hpp
+-
+cstdlib
+-
+
