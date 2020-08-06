@@ -1,15 +1,2 @@
 
-*.make
-*.cmake
-*.log
-*.marks
-src/C++/build/Makefile
-src/C++/build/CMakeCache.txt
-src/C++/build/CMakeFiles/3.16.3/CMakeDetermineCompilerABI_CXX.bin
-src/C++/build/CMakeFiles/3.16.3/CompilerIdCXX/a.out
-src/C++/build/CMakeFiles/3.16.3/CompilerIdCXX/CMakeCXXCompilerId.cpp
-src/C++/build/CMakeFiles/CheckLibraryExists/CheckFunctionExists.cxx
-src/C++/build/CMakeFiles/cmake.check_cache
-src/C++/build/CMakeFiles/main.dir/link.txt
-src/C++/build/CMakeFiles/Makefile2
-src/C++/build/CMakeFiles/TargetDirectories.txt
+src/C++/build/

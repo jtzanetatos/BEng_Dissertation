@@ -116,6 +116,14 @@ cv::Mat clrCnv(cv::Mat fr, cv::Mat fgc) {
 
 }
 
+cv::Mat imlabel(cv::Mat fgc, int connComp, int minsizeofCC) {
+        int objCounter = 0;
+
+
+}
+
+
+
 int main(int argc, char **argv)
 {
         // Create videoCaputre object
