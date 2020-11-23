@@ -9,8 +9,8 @@ Created on Fri Feb 28 13:14:01 2020
 
 import cv2 as cv
 import numpy as np
-from scipy.stats import mode
-from skimage.measure import label
+# from scipy.stats import mode
+# from skimage.measure import label
 import wx
 # TODO: Implement GTK+3 module; implement OS check; implement cupy for efficiency.
 # Implement NumPy's array iteration.
@@ -62,32 +62,17 @@ def imBackSup(fr_bw, bg_bw, threshold):
 
     '''
     
-    # Evaluate in/out frames dimensions
-    height, width = bg_bw.shape
-    
     # Evaluate abs difference between background model & current frame
-    fr_diff = np.abs((np.uint32(fr_bw) - np.uint32(bg_bw)))
-    
-    # Allocate output frame
-    fg = np.zeros((height, width), dtype=np.uint8)
+    fr_diff = cv.absdiff(fr_bw, bg_bw)
     
     # Loop through input frame's elements & implement threshold filtering
     # (High pass theshold filtering)
-    # TODO: implement NumPy approach on array iteration
     fg = np.where(fr_diff > threshold, np.uint8(fr_bw), np.uint8(0))
-    # for i in range(width):
-    #     for k in range(height):
-    #         # Current element belongs in foreground
-    #         if (fr_diff[i, k] > threshold):
-    #             fg[i, k] = fr_bw[i, k]
-    #         # Element belongs in background
-    #         else:
-    #             fg[i, k] = np.uint8(0)
     # Set current frame as background model for next iteration
     bg_bw = fr_bw
     
     # Return foreground & background models
-    return (np.array((fg, bg_bw)))
+    return (fg, bg_bw)
 
 def contour(fg, ns1, nsNN):
     '''
@@ -115,6 +100,9 @@ def contour(fg, ns1, nsNN):
     
     # Apply morphological closing on frame; MATLAB's 'fill' operation omitted.
     fgc = cv.morphologyEx(fg, cv.MORPH_CLOSE, kernel=st, iterations=1)
+    
+    # Binarize output mask
+    fgc = np.where(fgc > 0, np.uint8(1), np.uint8(0))
     
     # Return captured contour
     return fgc
@@ -151,8 +139,7 @@ def contour(fg, ns1, nsNN):
 def main():
     
     
-    # Select video file; at the time, .avi & .mp4 files supported.
-    #TODO: implement appropriate wildcard argument
+    # Select video file; at the time, .avi files supported.
     vid_file = get_path('*.avi')
     
     # Create video reader object
@@ -213,6 +200,9 @@ def main():
         # Show current frame
         cv.imshow('Frame', fgcRGB)
         
+        # Need this piece of code to properly update window
+        if cv.waitKey(1) & 0xFF == ord('q'):
+            break
     # Release capture & close all windows
     vidObj.release()
     cv.destroyAllWindows()
